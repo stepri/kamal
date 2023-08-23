@@ -124,6 +124,10 @@ class ConfigurationTest < ActiveSupport::TestCase
     assert_equal "app-missing", @config.service_with_version
   end
 
+  test "healthcheck service" do
+    assert_equal "healthcheck-app", @config.healthcheck_service
+  end
+
   test "env args" do
     assert_equal [ "-e", "REDIS_URL=\"redis://x/y\"" ], @config.env_args
   end

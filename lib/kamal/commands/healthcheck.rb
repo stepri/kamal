@@ -8,8 +8,8 @@ class Kamal::Commands::Healthcheck < Kamal::Commands::Base
       "--detach",
       "--name", container_name_with_version,
       "--publish", "#{EXPOSED_PORT}:#{config.healthcheck["port"]}",
-      "--label", "service=#{container_name}",
-      "-e", "KAMAL_CONTAINER_NAME=\"#{container_name}\"",
+      "--label", "service=#{config.healthcheck_service}",
+      "-e", "KAMAL_CONTAINER_NAME=\"#{config.healthcheck_service}\"",
       *web.env_args,
       *web.health_check_args,
       *config.volume_args,
@@ -39,12 +39,8 @@ class Kamal::Commands::Healthcheck < Kamal::Commands::Base
   end
 
   private
-    def container_name
-      [ "healthcheck", config.service, config.destination ].compact.join("-")
-    end
-
     def container_name_with_version
-      "#{container_name}-#{config.version}"
+      "#{config.healthcheck_service}-#{config.version}"
     end
 
     def container_id
