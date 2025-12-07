@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Run the local kamal gem from this directory
+cd "$(dirname "$0")"
+bundle exec ruby -Ilib bin/kamal "$@"
