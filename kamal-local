@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
-# Run the local kamal gem from this directory
-cd "$(dirname "$0")"
-bundle exec ruby -Ilib bin/kamal "$@"
+# Run the local kamal gem while preserving the current working directory
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+CURRENT_DIR="$(pwd)"
+
+cd "$SCRIPT_DIR"
+BUNDLE_GEMFILE="$SCRIPT_DIR/Gemfile" bundle exec ruby -I"$SCRIPT_DIR/lib" -C"$CURRENT_DIR" "$SCRIPT_DIR/bin/kamal" "$@"
